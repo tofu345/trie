@@ -47,7 +47,7 @@ impl Trie {
             }
 
             unsafe {
-                let node = match (*curr)
+                let next = match (*curr)
                     .children
                     .iter()
                     .find(|&&v| v.as_ref().unwrap().value == val[0])
@@ -61,10 +61,10 @@ impl Trie {
                 };
 
                 if val.len() == 1 {
-                    (*node).is_word = true;
+                    (*next).is_word = true;
                 }
 
-                recurse(node, &val[1..]);
+                recurse(next, &val[1..]);
             }
         }
 
