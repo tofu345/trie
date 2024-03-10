@@ -8,4 +8,6 @@ fn main() {
     // trie.insert("foolick");
     trie.insert("bar");
     trie.disp();
+
+    println!("{:?}", trie.find("fo"));
 }
