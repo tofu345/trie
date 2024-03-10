@@ -72,7 +72,7 @@ impl Trie {
     }
 
     pub fn find(&self, partial: &str) -> Vec<String> {
-        fn recurse(curr: Link, partial: &mut String, words: &mut Vec<String>) {
+        fn recurse(curr: Link, mut partial: String, words: &mut Vec<String>) {
             if partial.is_empty() {
                 return;
             }
@@ -84,10 +84,10 @@ impl Trie {
 
                 for &node in (*curr).children.iter() {
                     if (*node).is_word {
-                        words.push(format!("{}{}", partial, (*node).value));
+                        words.push(format!("{}{}", partial.clone(), (*node).value));
                     }
 
-                    recurse(node, partial, words);
+                    recurse(node, partial.clone(), words);
                 }
             }
         }
@@ -105,7 +105,7 @@ impl Trie {
 
         let mut partial = partial.to_owned();
         partial.pop();
-        recurse(curr, &mut partial.to_owned(), &mut words);
+        recurse(curr, partial, &mut words);
         words
     }
 
