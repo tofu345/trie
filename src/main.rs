@@ -2,6 +2,9 @@ use trie::Trie;
 
 fn main() {
     let mut trie = Trie::new();
+    trie.insert("f");
+    trie.delete("f");
+
     trie.insert("foo");
     trie.insert("fool");
     trie.insert("fox");

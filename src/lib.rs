@@ -116,13 +116,20 @@ impl Trie {
             }
 
             unsafe {
-                let next = match (*curr).children.iter().find(|&&v| (*v).value == value[0]) {
+                let curr_children = &mut (*curr).children;
+                let next = match curr_children.iter().find(|&&v| (*v).value == value[0]) {
                     None => return,
                     Some(v) => *v,
                 };
 
                 if value.len() == 1 {
                     if (*next).children.is_empty() {
+                        let val_to_del = (*next).value;
+                        let i = curr_children
+                            .iter()
+                            .position(|&v| (*v).value == val_to_del)
+                            .unwrap();
+                        curr_children.remove(i);
                         let _ = Box::from_raw(next);
                         return;
                     }
@@ -171,6 +178,11 @@ mod test {
     #[test]
     fn test() {
         let mut trie = Trie::new();
+        trie.insert("f");
+        trie.delete("f");
+
+        assert_vecs(trie.find("f"), vec![]);
+
         trie.insert("foo");
         trie.insert("fool");
         trie.insert("foolish");
