@@ -123,7 +123,6 @@ impl Trie {
 
                 if value.len() == 1 {
                     if (*next).children.is_empty() {
-                        println!("{:?}", value);
                         let _ = Box::from_raw(next);
                         return;
                     }
